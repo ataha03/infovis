@@ -271,14 +271,14 @@
 269,TR,Turkey,Solar,Level 1,1013,2817.837,7459.485,6446.485,3763.440667
 270,TR,Turkey,Geothermal,Level 1,4010,5101.487,6275.373,2265.373,5128.953333
 271,TR,Turkey,Other,Level 1,681,811.134,703.126,22.126,731.7533333
-272,BA,Bosnia & Herzegovina,Conventional thermal,Level 1,10971,11250,4003.505,-6967.495,8741.501667
-273,BA,Bosnia & Herzegovina,Nuclear,Level 1,0,0,0,0,0
-274,BA,Bosnia & Herzegovina,Hydro,Level 1,5614,3968,3476.554,-2137.446,4352.851333
-275,BA,Bosnia & Herzegovina,Pumped hydro power,Level 2,0,197,0,0,65.66666667
-276,BA,Bosnia & Herzegovina,Wind,Level 1,0,0,22.368,22.368,7.456
-277,BA,Bosnia & Herzegovina,Solar,Level 1,24,21,0,-24,15
-278,BA,Bosnia & Herzegovina,Geothermal,Level 1,0,0,0,0,0
-279,BA,Bosnia & Herzegovina,Other,Level 1,0,0,0,0,0
+272,BA,Bosnia,Conventional thermal,Level 1,10971,11250,4003.505,-6967.495,8741.501667
+273,BA,Bosnia,Nuclear,Level 1,0,0,0,0,0
+274,BA,Bosnia,Hydro,Level 1,5614,3968,3476.554,-2137.446,4352.851333
+275,BA,Bosnia,Pumped hydro power,Level 2,0,197,0,0,65.66666667
+276,BA,Bosnia,Wind,Level 1,0,0,22.368,22.368,7.456
+277,BA,Bosnia,Solar,Level 1,24,21,0,-24,15
+278,BA,Bosnia,Geothermal,Level 1,0,0,0,0,0
+279,BA,Bosnia,Other,Level 1,0,0,0,0,0
 280,UA,Ukraine,Conventional thermal,Level 1,65415,54041.9,60830.7,-4584.3,60095.86667
 281,UA,Ukraine,Nuclear,Level 1,75931,80295.3,84397.9,8466.9,80208.06667
 282,UA,Ukraine,Hydro,Level 1,9025,8812,11920.2,2895.2,9919.066667
