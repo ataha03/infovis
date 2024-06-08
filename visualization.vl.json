@@ -1,0 +1,270 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {"text": "Energy Production in Europe Explorer (2018)"},
+  "spacing": 0,
+  "vconcat": [
+    {
+      "hconcat": [
+        {
+          "width": 200,
+          "height": 400,
+          "spacing": 0,
+          "data": {
+            "url": "https://raw.githubusercontent.com/ataha03/infovis/main/energy_types_clean.csv",
+            "format": {"type": "csv"}
+          },
+          "mark": "bar",
+          "encoding": {
+            "x": {
+              "field": "2018",
+              "type": "quantitative",
+              "title": "Energy Produced (GWh)"
+            },
+            "y": {
+              "field": "country_name",
+              "type": "nominal",
+              "sort": "-x",
+              "title": "Country",
+              "axis": {"titlePadding": 0}
+            },
+            "color": {
+              "field": "type",
+              "type": "nominal",
+              "legend": null,
+              "scale": {
+                "domain": [
+                  "Conventional thermal",
+                  "Geothermal",
+                  "Hydro",
+                  "Nuclear",
+                  "Other",
+                  "Pumped hydro power",
+                  "Solar",
+                  "Wind"
+                ],
+                "range": [
+                  "#77AADD",
+                  "#EE8866",
+                  "#EEDD88",
+                  "#FFAABB",
+                  "#99DDFF",
+                  "#44BB99",
+                  "#BBCC33",
+                  "#AAAA00"
+                ]
+              }
+            },
+            "opacity": {"condition": {"param": "country_select"}, "value": 0.5}
+          },
+          "params": [
+            {
+              "name": "country_select",
+              "select": {
+                "type": "point",
+                "toggle": "false",
+                "fields": ["country_name"],
+                "nearest": true,
+                "on": "click"
+              }
+            }
+          ]
+        },
+        {
+          "width": 450,
+          "height": 450,
+          "layer": [
+            {
+              "data": {
+                "url": "https://raw.githubusercontent.com/ataha03/infovis/main/europe.topojson",
+                "format": {"type": "topojson", "feature": "europe"}
+              },
+              "transform": [
+                {
+                  "lookup": "id",
+                  "from": {
+                    "data": {
+                      "url": "https://raw.githubusercontent.com/ataha03/infovis/main/energy_types_2018.csv"
+                    },
+                    "key": "country",
+                    "fields": [
+                      "country_name",
+                      "Hydro",
+                      "Pumped hydro power",
+                      "Wind",
+                      "Solar",
+                      "Geothermal",
+                      "Other",
+                      "Conventional thermal",
+                      "Nuclear",
+                      "Total"
+                    ]
+                  }
+                },
+                {"filter": "datum.country_name !== null"}
+              ],
+              "mark": {"type": "geoshape", "stroke": "gray"},
+              "encoding": {
+                "color": {
+                  "field": "Total",
+                  "type": "quantitative",
+                  "legend": {
+                    "orient": "top-right",
+                    "direction": "horizontal",
+                    "gradientLength": 150,
+                    "title": "Total Energy Produced (GWh)",
+                    "titleAlign": "left"
+                  }
+                },
+                "opacity": {
+                  "condition": {"param": "country_select", "value": 1},
+                  "value": 0.2
+                },
+                "tooltip": [
+                  {"field": "country_name", "type": "nominal"},
+                  {"field": "Total", "type": "quantitative", "title": "total"},
+                  {"field": "Hydro", "type": "quantitative", "title": "Hydro"},
+                  {
+                    "field": "Pumped hydro power",
+                    "type": "quantitative",
+                    "title": "Pumped hydro power"
+                  },
+                  {"field": "Wind", "type": "quantitative", "title": "Wind"},
+                  {"field": "Solar", "type": "quantitative", "title": "Solar"},
+                  {
+                    "field": "Geothermal",
+                    "type": "quantitative",
+                    "title": "Geothermal"
+                  },
+                  {"field": "Other", "type": "quantitative", "title": "Other"},
+                  {
+                    "field": "Conventional thermal",
+                    "type": "quantitative",
+                    "title": "Conventional thermal"
+                  },
+                  {
+                    "field": "Nuclear",
+                    "type": "quantitative",
+                    "title": "Nuclear"
+                  }
+                ]
+              },
+              "params": [
+                {
+                  "name": "country_select",
+                  "select": {
+                    "type": "point",
+                    "toggle": "false",
+                    "fields": ["country_name"],
+                    "on": "click"
+                  }
+                }
+              ],
+              "projection": {"type": "conicConformal"}
+            },
+            {
+              "data": {
+                "url": "https://raw.githubusercontent.com/ataha03/infovis/main/Countries-Eurasia.csv",
+                "format": {"type": "csv"}
+              },
+              "transform": [
+                {
+                  "lookup": "name",
+                  "from": {
+                    "data": {
+                      "url": "https://raw.githubusercontent.com/ataha03/infovis/main/energy_types_2018.csv"
+                    },
+                    "key": "country_name",
+                    "fields": ["country", "type"]
+                  }
+                },
+                {"filter": "datum.country !== null"}
+              ],
+              "mark": {
+                "type": "text",
+                "fontWeight": "bold",
+                "fontStyle": "bold",
+                "fontSize": 8,
+                "color": "black",
+                "dy": 5
+              },
+              "encoding": {
+                "longitude": {"field": "longitude", "type": "quantitative"},
+                "latitude": {"field": "latitude", "type": "quantitative"},
+                "text": {"field": "name", "type": "nominal"}
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "width": 700,
+      "height": 100,
+      "spacing": 0,
+      "data": {
+        "url": "https://raw.githubusercontent.com/ataha03/infovis/main/energy_types_clean.csv"
+      },
+      "transform": [
+        {"filter": {"param": "country_select"}},
+        {"window": [{"op": "sum", "field": "2018", "as": "total"}]}
+      ],
+      "mark": "bar",
+      "encoding": {
+        "x": {"field": "type", "type": "nominal", "title": "Energy Type"},
+        "y": {
+          "field": "2018",
+          "type": "quantitative",
+          "title": "Energy Produced (GWh)"
+        },
+        "color": {
+          "field": "type",
+          "type": "nominal",
+          "legend": {"orient": "top", "title": "Energy Type"},
+          "scale": {
+            "domain": [
+              "Conventional thermal",
+              "Geothermal",
+              "Hydro",
+              "Nuclear",
+              "Other",
+              "Pumped hydro power",
+              "Solar",
+              "Wind"
+            ],
+            "range": [
+              "#77AADD",
+              "#EE8866",
+              "#EEDD88",
+              "#FFAABB",
+              "#99DDFF",
+              "#44BB99",
+              "#BBCC33",
+              "#AAAA00"
+            ]
+          }
+        },
+        "opacity": {"condition": {"param": "country_select"}, "value": 0.5},
+        "tooltip": [
+          {"field": "2018", "type": "quantitative", "title": "energy"}
+        ]
+      },
+      "params": [
+        {
+          "name": "country_select",
+          "select": {
+            "type": "point",
+            "toggle": "false",
+            "fields": ["country_name"],
+            "nearest": true,
+            "on": "click"
+          }
+        }
+      ]
+    }
+  ],
+  "config": {
+    "range": {"heatmap": {"scheme": "lighttealblue"}},
+    "axisX": {"labelAngle": 0},
+    "legend": {"symbolOpacity": 1, "symbolDirection": "horizontal"}
+  }
+}
